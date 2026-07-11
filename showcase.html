@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Presenter | 紹介ページ</title>
+<meta name="description" content="非公開GitHubリポジトリを、見せられるカタチにするプレゼンツール。">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/showcase-page.css">
+</head>
+<body class="showcase-page-body">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" style="text-decoration:none; color:inherit;">
+      <span class="brand-mark">GH</span>
+      <span class="brand-text">GitHub Presenter</span>
+    </a>
+    <div style="flex:1"></div>
+    <a class="btn btn-ghost" href="index.html">アプリを開く →</a>
+  </div>
+</header>
+
+<main class="showcase-page-main">
+
+  <section class="sp-hero">
+    <span class="badge badge-public">PUBLIC</span>
+    <h1>GitHub Presenter</h1>
+    <p class="sp-tagline">非公開GitHubリポジトリを、見せられるカタチに。</p>
+    <div class="sp-hero-actions">
+      <a class="btn btn-primary" style="width:auto; padding:10px 22px;" href="index.html">🚀 アプリを開く</a>
+      <a class="btn btn-ghost" href="https://github.com/TAKANO40414/github-presenter" target="_blank" rel="noopener noreferrer">GitHubで見る</a>
+    </div>
+
+    <div class="language-bar sp-lang-bar">
+      <div style="width:54.6%; background:#f1e05a" title="JavaScript 54.6%"></div>
+      <div style="width:29.9%; background:#563d7c" title="CSS 29.9%"></div>
+      <div style="width:15.5%; background:#e34c26" title="HTML 15.5%"></div>
+    </div>
+    <ul class="language-list sp-lang-list">
+      <li><span class="language-swatch" style="background:#f1e05a"></span>JavaScript<span class="language-pct">54.6%</span></li>
+      <li><span class="language-swatch" style="background:#563d7c"></span>CSS<span class="language-pct">29.9%</span></li>
+      <li><span class="language-swatch" style="background:#e34c26"></span>HTML<span class="language-pct">15.5%</span></li>
+    </ul>
+  </section>
+
+  <section class="panel sp-demo-panel">
+    <h3>🔴 ライブデモ（実際に操作できます）</h3>
+    <div class="sp-browser-chrome">
+      <div class="sp-browser-dots"><span></span><span></span><span></span></div>
+      <div class="sp-browser-url">takano40414.github.io/github-presenter/</div>
+    </div>
+    <div class="sp-iframe-wrap">
+      <iframe src="index.html" title="GitHub Presenter ライブデモ" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>発表用メモ</h3>
+    <div class="showcase-memo sp-memo">
+      <div class="memo-item">
+        <span class="memo-num">①</span>
+        <div>
+          <h4>どんな課題を解決した？</h4>
+          <p>非公開のGitHubリポジトリを人に見せる手段が無く、READMEやコミット履歴を説明するたびに画面共有でリポジトリを直接開いていた。社外秘の情報が視界に入るリスクもあった。</p>
+        </div>
+      </div>
+      <div class="memo-item">
+        <span class="memo-num">②</span>
+        <div>
+          <h4>このアプリは誰のため？</h4>
+          <p>複数の個人開発・業務改善アプリを抱えていて、社内やクライアントに定期的に成果物を説明する必要がある開発者。</p>
+        </div>
+      </div>
+      <div class="memo-item">
+        <span class="memo-num">③</span>
+        <div>
+          <h4>どんな特徴・工夫がある？</h4>
+          <p>サーバー不要でGitHub Pagesだけで動く。PATはブラウザのlocalStorageにのみ保存されGitHub以外には送信されない。README自動レンダリング・使用言語やコミット履歴の可視化に加えて、リポジトリごとに「紹介ページ（タイトル・URL・スクリーンショット・発表メモ）」を作成でき、プレゼンモードでそのまま発表用画面に切り替えられる。</p>
+        </div>
+      </div>
+      <div class="memo-item">
+        <span class="memo-num">④</span>
+        <div>
+          <h4>苦労した点・学んだこと</h4>
+          <p>バックエンド無しでプライベートAPIを安全に扱う設計（トークンの scope 限定・localStorage保存の注意喚起）と、独自Markdownパーサーの実装、localStorageの容量を意識した画像圧縮処理が学びだった。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="sp-footer">
+    <p>© 2026 GitHub Presenter — <a href="https://github.com/TAKANO40414/github-presenter" target="_blank" rel="noopener noreferrer">ソースコード</a></p>
+  </footer>
+
+</main>
+
+</body>
+</html>
