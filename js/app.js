@@ -13,6 +13,7 @@ const TOKEN_KEY = "ghp_presenter_token";
 const state = {
   token: null,
   user: null,
+  tokenScopes: null,
   repos: [],
   filtered: [],
   currentRepo: null,
@@ -61,6 +62,7 @@ function cacheDom() {
 
   el.userGreeting = document.getElementById("userGreeting");
   el.repoCount = document.getElementById("repoCount");
+  el.scopeWarning = document.getElementById("scopeWarning");
   el.repoGrid = document.getElementById("repoGrid");
   el.emptyState = document.getElementById("emptyState");
   el.loadingList = document.getElementById("loadingList");
@@ -137,9 +139,18 @@ async function connectWithToken(token, remember) {
   setLoginBusy(true);
   el.loginError.hidden = true;
   try {
-    const user = await ghFetch("/user", token);
+    const res = await fetch(`${API_BASE}/user`, {
+      headers: { Authorization: `token ${token}`, Accept: "application/vnd.github+json" },
+    });
+    if (!res.ok) {
+      const err = new Error(`GitHub API error ${res.status}`);
+      err.status = res.status;
+      throw err;
+    }
+    const user = await res.json();
     state.token = token;
     state.user = user;
+    state.tokenScopes = res.headers.get("X-OAuth-Scopes"); // null for fine-grained tokens
     if (remember) {
       localStorage.setItem(TOKEN_KEY, token);
     }
@@ -251,6 +262,7 @@ async function loadRepos() {
     const repos = await ghFetchAllPages("/user/repos?visibility=all&affiliation=owner,collaborator,organization_member&sort=updated&per_page=100");
     state.repos = repos;
     applyFilters();
+    renderScopeWarning(repos);
   } catch (err) {
     el.repoGrid.innerHTML = "";
     el.emptyState.hidden = false;
@@ -281,6 +293,25 @@ function applyFilters() {
 
   state.filtered = list;
   renderRepoGrid(list);
+}
+
+function renderScopeWarning(repos) {
+  const privateCount = repos.filter((r) => r.private).length;
+  const publicCount = repos.length - privateCount;
+  const scopes = state.tokenScopes; // string like "repo, read:org" or null (fine-grained token)
+  const hasRepoScope = scopes ? scopes.split(",").map((s) => s.trim()).includes("repo") : null;
+
+  let msg = "";
+  if (scopes !== null && hasRepoScope === false) {
+    msg = `⚠️ このトークンには "repo" スコープがありません。非公開リポジトリは取得できません（現在: 公開${publicCount}件 / 非公開0件）。GitHubでトークンに repo スコープを追加するか、再発行して再ログインしてください。`;
+  } else if (scopes === null && privateCount === 0) {
+    msg = `ℹ️ Fine-grained トークンを検出しました（公開${publicCount}件 / 非公開0件）。非公開リポジトリを見るには、トークン発行時の「Repository access」で対象の非公開リポジトリを選択し、Permissions に Contents: Read-only を付与してください。`;
+  } else if (privateCount > 0) {
+    msg = `✅ 非公開リポジトリを ${privateCount} 件検出しました（公開${publicCount}件）。`;
+  }
+  el.scopeWarning.textContent = msg;
+  el.scopeWarning.hidden = !msg;
+  el.scopeWarning.classList.toggle("scope-ok", privateCount > 0);
 }
 
 function renderRepoGrid(repos) {
