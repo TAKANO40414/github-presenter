@@ -452,10 +452,20 @@ body.presenting .repo-card-desc { font-size: 14px; -webkit-line-clamp: 4; }
 }
 .showcase-empty .btn { margin-top: 12px; }
 
+.showcase-panel-full { padding: 32px; }
+.showcase-panel-full .showcase-body-inner,
+.showcase-panel-full .showcase-preview,
+.showcase-panel-full .showcase-empty {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .showcase-title {
-  font-size: 18px;
+  font-size: 28px;
   font-weight: 800;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 /* Preview: tabs + stage + thumb rail */
@@ -560,6 +570,20 @@ body.presenting .repo-card-desc { font-size: 14px; -webkit-line-clamp: 4; }
 }
 .memo-item h4 { font-size: 12.5px; color: var(--text-dim); margin-bottom: 4px; font-weight: 600; }
 .memo-item p { font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
+
+.showcase-panel-full .showcase-memo {
+  max-width: 900px;
+  margin: 24px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 28px;
+}
+.showcase-panel-full .memo-num { width: 32px; height: 32px; font-size: 14px; }
+.showcase-panel-full .memo-item h4 { font-size: 14px; }
+.showcase-panel-full .memo-item p { font-size: 16px; line-height: 1.7; }
+@media (max-width: 760px) {
+  .showcase-panel-full .showcase-memo { grid-template-columns: 1fr; }
+}
 
 /* ---------- Modal ---------- */
 .modal-overlay {
